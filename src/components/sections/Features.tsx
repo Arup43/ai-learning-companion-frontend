@@ -9,11 +9,10 @@ interface FeatureCardProps {
   title: string;
   description: string;
   iconBgClass: string;
-  iconTextClass: string;
   learnMoreClass: string;
 }
 
-const FeatureCard = ({ icon, title, description, iconBgClass, iconTextClass, learnMoreClass }: FeatureCardProps) => {
+const FeatureCard = ({ icon, title, description, iconBgClass, learnMoreClass }: FeatureCardProps) => {
   return (
     <motion.div 
       variants={fadeInUp}
@@ -44,7 +43,6 @@ export const Features = () => {
       title: "Smart Note Creation",
       description: "Create comprehensive notes from YouTube videos, PDFs, audio recordings, and live sessions with AI-powered extraction.",
       iconBgClass: "bg-blue-500/10",
-      iconTextClass: "text-blue-600",
       learnMoreClass: "text-blue-600"
     },
     {
@@ -52,7 +50,6 @@ export const Features = () => {
       title: "Auto-Generated Flashcards",
       description: "Transform your notes into intelligent flashcards automatically, with spaced repetition for optimal memory retention.",
       iconBgClass: "bg-purple-500/10",
-      iconTextClass: "text-purple-600",
       learnMoreClass: "text-purple-600"
     },
     {
@@ -60,7 +57,6 @@ export const Features = () => {
       title: "Interactive Quizzes",
       description: "Generate personalized quizzes from your study materials to test your knowledge and track your progress.",
       iconBgClass: "bg-green-500/10",
-      iconTextClass: "text-green-600",
       learnMoreClass: "text-green-600"
     },
     {
@@ -68,7 +64,6 @@ export const Features = () => {
       title: "Detailed Study Notes",
       description: "Get comprehensive, structured notes with key concepts, definitions, and important points highlighted automatically.",
       iconBgClass: "bg-orange-500/10",
-      iconTextClass: "text-orange-600",
       learnMoreClass: "text-orange-600"
     },
     {
@@ -76,7 +71,6 @@ export const Features = () => {
       title: "AI Summaries",
       description: "Receive concise, intelligent summaries of your content that capture the most important information and insights.",
       iconBgClass: "bg-indigo-500/10",
-      iconTextClass: "text-indigo-600",
       learnMoreClass: "text-indigo-600"
     },
     {
@@ -84,7 +78,6 @@ export const Features = () => {
       title: "Chat with Materials",
       description: "Have interactive conversations with your YouTube videos, PDFs, and notes. Ask questions and get instant answers.",
       iconBgClass: "bg-pink-500/10",
-      iconTextClass: "text-pink-600",
       learnMoreClass: "text-pink-600"
     }
   ];
@@ -121,7 +114,6 @@ export const Features = () => {
               title={feature.title}
               description={feature.description}
               iconBgClass={feature.iconBgClass}
-              iconTextClass={feature.iconTextClass}
               learnMoreClass={feature.learnMoreClass}
             />
           ))}

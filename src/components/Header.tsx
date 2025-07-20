@@ -71,12 +71,16 @@ export default function Header() {
 
           {/* Auth Buttons */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" className="text-sm font-medium">
-              Sign In
-            </Button>
-            <Button className="text-sm font-medium bg-black hover:bg-gray-800">
-              Get Started
-            </Button>
+            <Link href="/login">
+              <Button variant="ghost" className="text-sm font-medium">
+                Sign In
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button className="text-sm font-medium bg-black hover:bg-gray-800">
+                Get Started
+              </Button>
+            </Link>
           </div>
         </nav>
       </div>

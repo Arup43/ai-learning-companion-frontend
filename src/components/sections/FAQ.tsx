@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { useState } from "react";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
@@ -17,28 +17,45 @@ const FAQItem = ({ question, answer, isOpen, index, toggleFAQ }: FAQItemProps) =
   return (
     <motion.div 
       variants={fadeInUp}
-      className="border-b border-gray-100 last:border-b-0"
+      className="mb-6 last:mb-0"
     >
-      <button
-        onClick={() => toggleFAQ(index)}
-        className="w-full px-8 py-8 flex items-center justify-between text-left hover:bg-gray-50 transition-all duration-200 group"
+      <div 
+        className={`overflow-hidden rounded-2xl transition-all duration-300 ${
+          isOpen ? "bg-blue-50 shadow-md" : "bg-white border border-gray-100 hover:border-blue-200"
+        }`}
       >
-        <span className="text-lg md:text-xl font-semibold text-gray-900 pr-6 group-hover:text-black transition-colors">
-          {question}
-        </span>
-        <div className={`p-2 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-all duration-200 ${isOpen ? 'rotate-180' : ''}`}>
-          <ChevronDown className="w-5 h-5 text-gray-600" />
-        </div>
-      </button>
-      {isOpen && (
-        <div className="px-8 pb-8 animate-in slide-in-from-top-2 duration-200">
-          <div className="bg-gray-50 rounded-xl p-6 border-l-4 border-blue-500">
-            <p className="text-gray-700 leading-relaxed text-lg">
-              {answer}
-            </p>
+        <button
+          onClick={() => toggleFAQ(index)}
+          className="w-full px-8 py-6 flex items-center justify-between text-left transition-all duration-300"
+        >
+          <span className={`text-xl font-semibold pr-6 transition-colors ${
+            isOpen ? "text-blue-700" : "text-gray-800"
+          }`}>
+            {question}
+          </span>
+          <div className={`flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
+            isOpen ? "bg-blue-500 text-white rotate-0" : "bg-gray-100 text-gray-600"
+          }`}>
+            {isOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
           </div>
-        </div>
-      )}
+        </button>
+        
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="px-8 pb-8"
+          >
+            <div className="bg-white rounded-xl p-6 shadow-sm">
+              <p className="text-gray-700 leading-relaxed">
+                {answer}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </div>
     </motion.div>
   );
 };
@@ -78,27 +95,36 @@ export const FAQ = () => {
   ];
 
   return (
-    <section className="py-24 bg-gray-50">
+    <section className="py-24 bg-gradient-to-b from-white to-blue-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900">
-            Frequently<br />Asked Questions
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
+            Got Questions?
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-700 via-blue-600 to-blue-800 bg-clip-text text-transparent">
+            Frequently Asked Questions
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Everything you need to know about ViteLearn
           </p>
-        </div>
+        </motion.div>
 
-        {/* FAQ Accordion */}
-        <motion.div 
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-            {faqItems.map((faq, index) => (
+        {/* FAQ Items */}
+        <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          <motion.div 
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            className="space-y-6"
+          >
+            {faqItems.slice(0, 3).map((faq, index) => (
               <FAQItem 
                 key={index}
                 question={faq.question}
@@ -108,7 +134,39 @@ export const FAQ = () => {
                 toggleFAQ={toggleFAQ}
               />
             ))}
-          </div>
+          </motion.div>
+          
+          <motion.div 
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            className="space-y-6"
+          >
+            {faqItems.slice(3).map((faq, index) => (
+              <FAQItem 
+                key={index + 3}
+                question={faq.question}
+                answer={faq.answer}
+                isOpen={openFAQ === index + 3}
+                index={index + 3}
+                toggleFAQ={toggleFAQ}
+              />
+            ))}
+          </motion.div>
+        </div>
+        
+        {/* Additional Support */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-gray-600">
+            Still have questions? <a href="#" className="text-blue-600 font-medium hover:underline">Contact our support team</a>
+          </p>
         </motion.div>
       </div>
     </section>
